@@ -12,9 +12,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import logo from '../../images/logo_2.png'
 
-const pages = ['Course Scores'];
+const pages = ['Course Scores', 'Play'];
 
 function ResponsiveAppBar() {
     return (
@@ -105,7 +104,7 @@ function ResponsiveAppBar() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton sx={{ p: 0 }}>
-                                <Avatar alt="Charlie Nguyen" src='src/images/logo_2.png' />
+                                <Avatar alt="Charlie Nguyen" src='/src/images/logo_2.png' />
                             </IconButton>
                         </Tooltip>
                     </Box>

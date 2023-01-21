@@ -1,7 +1,6 @@
 import './App.css';
 import {ErrorBoundary} from "./components/error-boundary";
 import {Route, Routes} from "react-router-dom";
-import ResponsiveAppBar from "./layout/ResponsiveAppBar";
 import {InitializationRoute} from "./route";
 
 function App() {
@@ -9,8 +8,7 @@ function App() {
         <>
             <ErrorBoundary>
                 <Routes basepath="/">
-                    <Route path="/" element={<InitializationRoute />}>
-                    </Route>
+                    <Route path="/" element={<InitializationRoute />} />
                 </Routes>
             </ErrorBoundary>
         </>

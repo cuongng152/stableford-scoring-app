@@ -1,3 +1,16 @@
 .mainWrapper {
   min-height: 100vh;
 }
+
+.contentWrapper {
+  max-width: 76rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+  @media only screen and (max-width: 1200px) and (min-width: 768px) {
+    max-width: 45rem !important;
+  }
+  @media only screen and (max-width: 1680px) and (min-width: 1201px) {
+    max-width: 65rem !important;
+  }
+}
