@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {CustomRouter} from "./components/customer-router/customRouter";
+import {myHistory} from "./utils/global-utils";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+      <CustomRouter history={myHistory}>
+          <App />
+      </CustomRouter>
   </React.StrictMode>
 );
 
