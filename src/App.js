@@ -1,18 +1,18 @@
 import './App.css';
 import {ErrorBoundary} from "./components/error-boundary";
-import {ThemeProvider} from "@mui/material";
-import {Route} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
+import ResponsiveAppBar from "./layout/ResponsiveAppBar";
+import {InitializationRoute} from "./route";
 
 function App() {
     return (
         <>
-          <ErrorBoundary>
-            <ThemeProvider theme={"white"}>
-              <Route basepath="/">
-                  <Route path="dashboard" element={<Dashboard />}/>
-              </Route>
-            </ThemeProvider>
-          </ErrorBoundary>
+            <ErrorBoundary>
+                <Routes basepath="/">
+                    <Route path="/" element={<InitializationRoute />}>
+                    </Route>
+                </Routes>
+            </ErrorBoundary>
         </>
     );
 }
