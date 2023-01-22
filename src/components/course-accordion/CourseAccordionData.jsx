@@ -1,10 +1,15 @@
 import styles from "./accordion.module.scss";
 import Button from "@mui/material/Button";
 import SendIcon from '@mui/icons-material/Send';
+import {useNavigate} from "react-router-dom";
 
 const CourseAccordionData = (props) => {
-    const { courseScore, index } = props || {}
-    const { avgDriverDistance, dailyHandicap, dateOfPlay, holeCode, stablefordScore, stroke } = courseScore
+    const { courseScore } = props || {}
+    const { avgDriverDistance, dailyHandicap, dateOfPlay, stablefordScore, stroke } = courseScore
+    const navigate = useNavigate()
+    const goToScoreDetails = () => {
+        navigate('/scoreDetails')
+    }
     return (
         <div>
             <div className={styles.AccordionDetailsWrapper}>
@@ -44,6 +49,8 @@ const CourseAccordionData = (props) => {
                     data-testid="detail-button"
                     variant="contained"
                     endIcon={<SendIcon />}
+                    style={{marginTop: "5px"}}
+                    onClick={goToScoreDetails}
                 >
                     Details
                 </Button>
