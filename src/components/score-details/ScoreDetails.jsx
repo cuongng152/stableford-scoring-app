@@ -8,6 +8,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Layout from "../../layout";
 import styles from "../../layout/layout.module.scss";
+import {retrieveStablefordScore} from "../../service/api-service";
+import {useEffect, useState} from 'react'
 
 function createData(
     length: string,
@@ -22,28 +24,20 @@ function createData(
     return { length, holeIndex, par, stroke, score, teeOffLength, teeOfDirection, putt };
 }
 
-const rows = [
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-    createData("475",5, 5, 5, 3, 210.5, "Hit", 2),
-];
-
 export default function ScoreDetails() {
+    useEffect(() => {
+        let inFlightData = []
+        retrieveStablefordScore().then((response) => {
+            response && response.map(data => {
+                const { holeIndex, length, par, score, stroke, holeAnalysis } = data || {}
+                const { putt, teeOffDirection, teeOffLength } = holeAnalysis || {}
+                inFlightData.push(createData(length, holeIndex, par, stroke, score, teeOffLength, teeOffDirection, putt))
+                return inFlightData
+            })
+            setRowsData(inFlightData)
+        })
+    }, [])
+    const [rowsData, setRowsData] = useState([])
     return (
         <Layout>
             <div className={styles.contentWrapper}>
@@ -70,12 +64,12 @@ export default function ScoreDetails() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row, index) => (
+                        {rowsData.map((row, index) => (
                             <TableRow
                                 key={index}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
                             >
-                                <TableCell component="th" scope="row" >{index+1}</TableCell>
+                                <TableCell component="th" scope="row">{index + 1}</TableCell>
                                 <TableCell style={{marginRight: "-20px"}}>
                                     {row.length}
                                 </TableCell>
