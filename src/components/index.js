@@ -1,2 +1,2 @@
-export { default as CourseAccordion } from './course-accordion/CourseAccordion'
-export { default as CourseAccordionCard } from './course-accordion/CourseAccordionCard'
+export { default as SimpleAccordion } from './course-accordion/SimpleAccordion'
+export { default as CourseAccordionData } from './course-accordion/CourseAccordionData'

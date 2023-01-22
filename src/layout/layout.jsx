@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import styles from './layout.module.scss'
 import ResponsiveAppBar from "./ResponsiveAppBar";
-import {CourseAccordionCard} from "../components";
+import {SimpleAccordion} from "../components";
 
 const Layout = ({ children }) => {
     return (
@@ -14,7 +14,8 @@ const Layout = ({ children }) => {
                 <p className={'text-semi-bold font-black-1 text-center text-lg-start'}>
                     Here are all the courses you have played. Click to see the details.
                 </p>
-                <CourseAccordionCard />
+                {/*<CourseAccordionCard />*/}
+                <SimpleAccordion />
             </div>
             <div className="flex-grow-1 d-flex w-100">{children}</div>
         </div>
