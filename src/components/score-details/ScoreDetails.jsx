@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,8 +9,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Layout from "../../layout";
 import styles from "../../layout/layout.module.scss";
-import {retrieveStablefordScore} from "../../service/api-service";
-import {useEffect, useState} from 'react'
+import {getStablefordScoreByHoleCode} from "../../service/api-service";
+import store from "../../store";
 
 function createData(
     length: string,
@@ -24,10 +25,12 @@ function createData(
     return { length, holeIndex, par, stroke, score, teeOffLength, teeOfDirection, putt };
 }
 
+const getHoleCode = () => store.getState()?.appReducer?.holeCode
+
 export default function ScoreDetails() {
     useEffect(() => {
         let inFlightData = []
-        retrieveStablefordScore().then((response) => {
+        getStablefordScoreByHoleCode(getHoleCode()).then((response) => {
             response && response.map(data => {
                 const { holeIndex, length, par, score, stroke, holeAnalysis } = data || {}
                 const { putt, teeOffDirection, teeOffLength } = holeAnalysis || {}

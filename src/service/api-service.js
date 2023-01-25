@@ -17,3 +17,12 @@ export const retrieveStablefordScore = async () => {
         throw new Error()
     }
 }
+
+export const getStablefordScoreByHoleCode = async (holeCode) => {
+    try {
+        const { data } = await stablefordScoreApiClient.get(`/hole/${holeCode}`).then((response) => response)
+        return data
+    } catch (err) {
+        throw new Error(err)
+    }
+}
