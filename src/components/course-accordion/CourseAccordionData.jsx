@@ -2,13 +2,16 @@ import styles from "./accordion.module.scss";
 import Button from "@mui/material/Button";
 import SendIcon from '@mui/icons-material/Send';
 import {useNavigate} from "react-router-dom";
+import store from "../../store";
+import {setHoleCode} from "../../store/redux";
 
 const CourseAccordionData = (props) => {
     const { courseScore } = props || {}
-    const { avgDriverDistance, dailyHandicap, dateOfPlay, stablefordScore, stroke } = courseScore
+    const { avgDriverDistance, dailyHandicap, dateOfPlay, stablefordScore, stroke, holeCode } = courseScore
     const navigate = useNavigate()
     const goToScoreDetails = () => {
         navigate('/scoreDetails')
+        store.dispatch(setHoleCode(holeCode))
     }
     return (
         <div>

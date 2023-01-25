@@ -1,0 +1,4 @@
+export {
+    setHoleCode
+} from './actions'
+export { default } from './reducer'
