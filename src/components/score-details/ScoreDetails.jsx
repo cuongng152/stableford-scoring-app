@@ -28,19 +28,27 @@ function createData(
 const getHoleCode = () => store.getState()?.appReducer?.holeCode
 
 export default function ScoreDetails() {
+    const [rowsData, setRowsData] = useState(JSON.parse(localStorage.getItem('data')))
     useEffect(() => {
         let inFlightData = []
-        getStablefordScoreByHoleCode(getHoleCode()).then((response) => {
-            response && response.map(data => {
-                const { holeIndex, length, par, score, stroke, holeAnalysis } = data || {}
-                const { putt, teeOffDirection, teeOffLength } = holeAnalysis || {}
-                inFlightData.push(createData(length, holeIndex, par, stroke, score, teeOffLength, teeOffDirection, putt))
-                return inFlightData
+        if (getHoleCode() !== '') {
+            getStablefordScoreByHoleCode(getHoleCode()).then((response) => {
+                response && response.map(data => {
+                    const { holeIndex, length, par, score, stroke, holeAnalysis } = data || {}
+                    const { putt, teeOffDirection, teeOffLength } = holeAnalysis || {}
+                    inFlightData.push(createData(length, holeIndex, par, stroke, score, teeOffLength, teeOffDirection, putt))
+                    return inFlightData
+                })
+                setRowsData(inFlightData)
             })
-            setRowsData(inFlightData)
-        })
+        }
     }, [])
-    const [rowsData, setRowsData] = useState([])
+
+    useEffect(() => {
+        if (rowsData.length > 0) {
+            localStorage.setItem("data", JSON.stringify(rowsData))
+        }
+    }, [rowsData])
     return (
         <Layout>
             <div className={styles.contentWrapper}>
@@ -67,7 +75,7 @@ export default function ScoreDetails() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rowsData.map((row, index) => (
+                        {rowsData && rowsData.map((row, index) => (
                             <TableRow
                                 key={index}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
