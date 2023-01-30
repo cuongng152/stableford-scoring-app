@@ -28,8 +28,11 @@ function createData(
 const getHoleCode = () => store.getState()?.appReducer?.holeCode
 
 export default function ScoreDetails() {
-    const [rowsData, setRowsData] = useState(JSON.parse(localStorage.getItem('data')))
+    const [rowsData, setRowsData] = useState([])
     useEffect(() => {
+        if (localStorage.getItem('data')) {
+            setRowsData(JSON.parse(localStorage.getItem('data')))
+        }
         let inFlightData = []
         if (getHoleCode() !== '') {
             getStablefordScoreByHoleCode(getHoleCode()).then((response) => {
