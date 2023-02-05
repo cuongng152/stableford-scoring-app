@@ -4,8 +4,9 @@ import {Grid, styled} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import FirstLayer from "./play-details/FirstLayer";
+import {useState} from "react";
 
-const Item = styled(Paper)(({ theme }) => ({
+const Item = styled(Paper)(({theme}) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
     padding: theme.spacing(1),
@@ -15,15 +16,15 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Play() {
     const matchData = JSON.parse(localStorage.getItem('matchData')) || []
-
+    const [holeNumber, setHoleNumber] = useState(1)
     return (
         <Layout>
             <div className={styles.contentWrapper}>
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{flexGrow: 1}}>
                     <Grid container spacing={2}>
                         <Grid xs={12} md={8}>
                             <Item>
-                                <FirstLayer matchData={matchData} />
+                                <FirstLayer matchData={matchData} holeNumber={holeNumber} setHoleNumber={setHoleNumber}/>
                             </Item>
                         </Grid>
                         <Grid xs={9} md={4}>
