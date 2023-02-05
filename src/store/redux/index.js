@@ -1,4 +1,5 @@
 export {
-    setHoleCode
+    setHoleCode,
+    setMatchData
 } from './actions'
 export { default } from './reducer'

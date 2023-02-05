@@ -26,7 +26,7 @@ function ResponsiveAppBar() {
         if (e.target.innerHTML === 'Course Scores') {
             navigate('/')
         } else if (e.target.innerHTML === 'Play') {
-            navigate('/play')
+            navigate('/preplay')
         }
         setAnchorElNav(null);
     };

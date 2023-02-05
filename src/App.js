@@ -2,7 +2,7 @@ import './App.css';
 import {ErrorBoundary} from "./components/error-boundary";
 import {Route, Routes} from "react-router-dom";
 import {InitializationRoute} from "./route";
-import {ScoreDetails} from "./components";
+import {PreMatch, ScoreDetails} from "./components";
 
 function App() {
     return (
@@ -11,6 +11,8 @@ function App() {
                 <Routes basepath="/">
                     <Route path="/" element={<InitializationRoute />} />
                     <Route path="/scoredetails" element={<ScoreDetails />} />
+                    <Route path="/preplay" element={<PreMatch />} />
+                    {/*<Route path="/play" element={<Play />} />*/}
                 </Routes>
             </ErrorBoundary>
         </>
