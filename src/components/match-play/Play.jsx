@@ -5,6 +5,8 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import FirstLayer from "./play-details/FirstLayer";
 import {useState} from "react";
+import {SecondLayerRight} from "../index";
+import SecondLayerLeft from "./play-details/SecondLayerLeft";
 
 const Item = styled(Paper)(({theme}) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -17,6 +19,7 @@ const Item = styled(Paper)(({theme}) => ({
 export default function Play() {
     const matchData = JSON.parse(localStorage.getItem('matchData')) || []
     const [holeNumber, setHoleNumber] = useState(1)
+    const [score, setScore] = useState(0)
     return (
         <Layout>
             <div className={styles.contentWrapper}>
@@ -28,10 +31,14 @@ export default function Play() {
                             </Item>
                         </Grid>
                         <Grid xs={9} md={4}>
-                            <Item>Second layer-left</Item>
+                            <Item>
+                                <SecondLayerLeft score={score} setScore={setScore} />
+                            </Item>
                         </Grid>
                         <Grid xs={3} md={4}>
-                            <Item>Second layer - right</Item>
+                            <Item>
+                                <SecondLayerRight setScore={setScore} holeNumber={holeNumber} setHoleNumber={setHoleNumber} />
+                            </Item>
                         </Grid>
                         <Grid xs={6} md={8}>
                             <Item>Third layer - left</Item>

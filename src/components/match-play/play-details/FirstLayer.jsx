@@ -10,7 +10,7 @@ export default function FirstLayer(props) {
     const {matchData, holeNumber, setHoleNumber} = props || {}
     const inPlayMatchData = matchData[holeNumber-1]
     return (
-        <div>
+        <div style={{borderStyle: "double", borderColor: "red", borderRadius: "5px", width: "95%"}}>
             <Typography className={styles.firstLayer} style={{fontSize: "30px", fontWeight: 'bolder'}}>
                 <Button onClick={() => {
                     if (holeNumber > 1) {
@@ -39,7 +39,7 @@ export default function FirstLayer(props) {
                         '& > :not(style)': {
                             m: 1,
                             width: 50,
-                            height: "100%",
+                            height: "10%",
                         },
                     }}
                 >
