@@ -7,7 +7,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Button from "@mui/material/Button";
 
 export default function FirstLayer(props) {
-    const {matchData, holeNumber, setHoleNumber} = props || {}
+    const {matchData, holeNumber, setHoleNumber, setTeeOffLength} = props || {}
     const inPlayMatchData = matchData[holeNumber-1]
     return (
         <div style={{borderStyle: "double", borderColor: "red", borderRadius: "5px", width: "95%"}}>
@@ -15,6 +15,7 @@ export default function FirstLayer(props) {
                 <Button onClick={() => {
                     if (holeNumber > 1) {
                         setHoleNumber(holeNumber-1)
+                        setTeeOffLength(0)
                     }
                 }}>
                     <ArrowBackIosIcon />
@@ -23,6 +24,7 @@ export default function FirstLayer(props) {
                 <Button onClick={() => {
                     if (holeNumber < 18) {
                         setHoleNumber(holeNumber + 1)
+                        setTeeOffLength(0)
                     }
                 }}>
                     <ArrowForwardIosIcon />
