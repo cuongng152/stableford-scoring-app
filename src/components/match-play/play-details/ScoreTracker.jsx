@@ -22,7 +22,9 @@ export default function ScoreTracker(props) {
         setTeeOffDirection,
         inPlayMatchData,
         holeNumber,
-        setHoleNumber
+        setHoleNumber,
+        stablefordObj,
+        setStablefordScore
     } = props || {}
 
     const teeOffDirectionArray = [
@@ -80,17 +82,38 @@ export default function ScoreTracker(props) {
         }
     }
 
+    const calculateStablefordScore = (stablefordObj, stroke) => {
+        let score = 0
+        const {holePar} = stablefordObj || {}
+        console.log(holePar)
+        console.log(stroke)
+        const diff = stroke - holePar
+        if (diff <= -3) {
+            score = 5
+        } else if (diff === -2) {
+            score = 4
+        } else if (diff === -1) {
+            score = 3
+        } else if (diff === 0) {
+            score = 2
+        } else if (diff === 1) {
+            score = 1
+        }
+        return score
+    }
+
     const saveHole = () => {
         const storageData = JSON.parse(localStorage.getItem('hole-data'))
         const inMemoryFinalData = JSON.parse(localStorage.getItem('final-data'))
         let preFinalData = inMemoryFinalData || []
+        const stablefordScore = calculateStablefordScore(stablefordObj, stroke)
         const data = {
             "stroke": stroke,
             "putt": putt,
             "teeOffLength": storageData?.teeOffLength,
             "teeOffDirection": storageData?.teeOffDirection,
             "par": inPlayMatchData.holePar,
-            "score": stroke-inPlayMatchData.holePar
+            "stablefordScore": stablefordScore
         }
         if (holeNumber > 0 && holeNumber < 18) {
             /** clear storage and set hole number*/

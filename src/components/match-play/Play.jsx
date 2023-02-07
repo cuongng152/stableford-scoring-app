@@ -16,8 +16,23 @@ const Item = styled(Paper)(({theme}) => ({
     color: theme.palette.text.secondary,
 }));
 
+const prepareStableford = (matchData, dailyHandicap) => {
+    const test = matchData.map((data) => {
+        let diff = dailyHandicap - 18
+        if (diff > 0) {
+            if (Number(data.holeIndex) <= diff) {
+                data.holePar = Number(data.holePar) + 2
+            } else if (Number(data.holeIndex) > diff) {
+                data.holePar = Number(data.holePar) + 1
+            }
+        }
+        return data
+    })
+    return test
+}
+
 export default function Play() {
-    const matchData = JSON.parse(localStorage.getItem('matchData')) || []
+    const matchData = localStorage.getItem('matchData') && JSON.parse(localStorage.getItem('matchData'))
     const inMemoryHoleNumber = JSON.parse(localStorage.getItem('hole-number')) || 1
     const [holeNumber, setHoleNumber] = useState(inMemoryHoleNumber)
     const [score, setScore] = useState(0)
@@ -26,6 +41,101 @@ export default function Play() {
     const [teeOffDirection, setTeeOffDirection] = useState("")
     const [teeOffLength, setTeeOfFLength] = useState(0)
     const inPlayMatchData = matchData[holeNumber - 1]
+    const stableford = [
+        {
+            "holeIndex": 9,
+            "holeLength": "445",
+            "holePar": 6
+        },
+        {
+            "holeIndex": 3,
+            "holeLength": "325",
+            "holePar": 6
+        },
+        {
+            "holeIndex": 15,
+            "holeLength": "132",
+            "holePar": 4
+        },
+        {
+            "holeIndex": 5,
+            "holeLength": "464",
+            "holePar": 6
+        },
+        {
+            "holeIndex": 18,
+            "holeLength": "138",
+            "holePar": 4
+        },
+        {
+            "holeIndex": 7,
+            "holeLength": "340",
+            "holePar": 5
+        },
+        {
+            "holeIndex": 4,
+            "holeLength": "345",
+            "holePar": 5
+        },
+        {
+            "holeIndex": 10,
+            "holeLength": "314",
+            "holePar": 5
+        },
+        {
+            "holeIndex": 17,
+            "holeLength": "130",
+            "holePar": 4
+        },
+        {
+            "holeIndex": 1,
+            "holeLength": "220",
+            "holePar": 5
+        },
+        {
+            "holeIndex": 8,
+            "holeLength": "320",
+            "holePar": 5
+        },
+        {
+            "holeIndex": 11,
+            "holeLength": "141",
+            "holePar": 4
+        },
+        {
+            "holeIndex": 13,
+            "holeLength": "275",
+            "holePar": 5
+        },
+        {
+            "holeIndex": 16,
+            "holeLength": "128",
+            "holePar": 4
+        },
+        {
+            "holeIndex": 14,
+            "holeLength": "425",
+            "holePar": 6
+        },
+        {
+            "holeIndex": 12,
+            "holeLength": "120",
+            "holePar": 4
+        },
+        {
+            "holeIndex": 6,
+            "holeLength": "320",
+            "holePar": 5
+        },
+        {
+            "holeIndex": 2,
+            "holeLength": "171",
+            "holePar": 5
+        }
+    ]
+    // useEffect(() => {
+    //     const test = prepareStableford(matchData, 21)
+    // }, [matchData])
     return (
         <Layout>
             <div className={styles.contentWrapper}>
@@ -34,7 +144,8 @@ export default function Play() {
                         <Grid xs={12} md={8}>
                             <Item>
                                 <FirstLayer matchData={matchData} holeNumber={holeNumber}
-                                            setHoleNumber={setHoleNumber} setTeeOffLength={setTeeOfFLength}/>
+                                            setHoleNumber={setHoleNumber} setTeeOffLength={setTeeOfFLength}
+                                            />
                             </Item>
                         </Grid>
                         <Grid xs={12} md={12}>
@@ -67,7 +178,9 @@ export default function Play() {
                                               teeOffLength={teeOffLength} setStroke={setStroke} setPutt={setPutt}
                                               setTeeOffDirection={setTeeOffDirection}
                                               setTeeOffLength={setTeeOfFLength} inPlayMatchData={inPlayMatchData}
-                                              holeNumber={holeNumber} setHoleNumber={setHoleNumber}/>
+                                              holeNumber={holeNumber} setHoleNumber={setHoleNumber}
+                                              stablefordObj={stableford[holeNumber - 1]}
+                                />
                             </Item>
                         </Grid>
                     </Grid>
