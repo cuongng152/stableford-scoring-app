@@ -89,6 +89,8 @@ export default function ScoreTracker(props) {
             "putt": putt,
             "teeOffLength": storageData?.teeOffLength,
             "teeOffDirection": storageData?.teeOffDirection,
+            "par": inPlayMatchData.holePar,
+            "score": stroke-inPlayMatchData.holePar
         }
         if (holeNumber > 0 && holeNumber < 18) {
             /** clear storage and set hole number*/
@@ -233,7 +235,7 @@ export default function ScoreTracker(props) {
             <div style={{display: "flex", justifyContent: "center", marginTop: "10px"}}>
                 <Button variant="contained" onClick={inputDetails}>
                     <TaskAltIcon />
-                    <Typography style={{marginLeft: "5px"}}>Enter</Typography>
+                    <Typography style={{marginLeft: "5px"}}>Save Length and Direction</Typography>
                 </Button>
                 <Button variant="contained" style={{marginLeft: "20px"}} onClick={saveHole}>
                     <SaveAsIcon />

@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import FirstLayer from "./play-details/FirstLayer";
 import {useState} from "react";
-import SecondLayerLeft from "./play-details/SecondLayerLeft";
+import SecondLayer from "./play-details/SecondLayer";
 import {ScoreTracker} from "../index";
 
 const Item = styled(Paper)(({theme}) => ({
@@ -46,7 +46,7 @@ export default function Play() {
                                 borderStyle: "double",
                                 marginLeft: "7px"
                             }}>
-                                <SecondLayerLeft score={score} setScore={setScore}/>
+                                <SecondLayer score={score} setScore={setScore}/>
                             </Item>
                         </Grid>
                         {/*<Grid xs={3} md={4}>*/}
