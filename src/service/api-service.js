@@ -26,3 +26,15 @@ export const getStablefordScoreByHoleCode = async (holeCode) => {
         throw new Error(err)
     }
 }
+
+export const saveStablefordScoreByHole = async (payload) => {
+    try {
+        const {status} =  await stablefordScoreApiClient.post(``, payload)
+        if (status === 201) {
+            return true
+        }
+        return false
+    } catch (err) {
+        throw new Error(err)
+    }
+}

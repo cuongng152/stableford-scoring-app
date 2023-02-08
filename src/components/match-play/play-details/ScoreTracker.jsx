@@ -9,6 +9,8 @@ import {TextField} from "@mui/material";
 import {useState} from "react";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import StablefordScore from "../../../Object/StablefordScore";
+import {saveStablefordScoreByHole} from "../../../service/api-service";
 
 export default function ScoreTracker(props) {
     const {
@@ -24,7 +26,6 @@ export default function ScoreTracker(props) {
         holeNumber,
         setHoleNumber,
         stablefordObj,
-        setStablefordScore
     } = props || {}
 
     const teeOffDirectionArray = [
@@ -107,35 +108,47 @@ export default function ScoreTracker(props) {
         const inMemoryFinalData = JSON.parse(localStorage.getItem('final-data'))
         let preFinalData = inMemoryFinalData || []
         const stablefordScore = calculateStablefordScore(stablefordObj, stroke)
-        const data = {
-            "stroke": stroke,
-            "putt": putt,
-            "teeOffLength": storageData?.teeOffLength,
-            "teeOffDirection": storageData?.teeOffDirection,
-            "par": inPlayMatchData.holePar,
-            "stablefordScore": stablefordScore
-        }
-        if (holeNumber > 0 && holeNumber < 18) {
-            /** clear storage and set hole number*/
-            setHoleNumber(holeNumber+1)
-            localStorage.setItem("hole-data", JSON.stringify([]))
-            if (holeNumber < 18) {
-                localStorage.setItem("hole-number", JSON.stringify(holeNumber+1))
+        const data = new StablefordScore({
+            holeCode: '02082022Morning',
+            length: inPlayMatchData.holeLength,
+            par: inPlayMatchData.holePar,
+            holeIndex: inPlayMatchData.holeIndex,
+            stroke: stroke,
+            score: stablefordScore,
+            holeAnalysis: {
+                putt: putt,
+                teeOffLength: storageData.teeOffLength,
+                teeOffDirection: storageData.teeOffDirection
             }
+        })
+        if (holeNumber > 0 && holeNumber < 18) {
+            /** saving stableford score by hole*/
+            saveStablefordScoreByHole(data)
+                .then(response => {
+                    /** clear storage and set hole number*/
+                    setHoleNumber(holeNumber+1)
+                    localStorage.setItem("hole-data", JSON.stringify([]))
+                    if (holeNumber < 18) {
+                        localStorage.setItem("hole-number", JSON.stringify(holeNumber+1))
+                    }
 
 
-            /** clear states */
-            setStroke(0)
-            setPutt(0)
-            setTeeOffLengthLeft("")
-            setTeeOffLength(0)
+                    /** clear states */
+                    setStroke(0)
+                    setPutt(0)
+                    setTeeOffLengthLeft("")
+                    setTeeOffLength(0)
 
-            /** set final data*/
-            preFinalData.push({
-                "hole": holeNumber,
-                "data": data
-            })
-            localStorage.setItem("final-data", JSON.stringify(preFinalData))
+                    /** set final data*/
+                    preFinalData.push({
+                        "hole": holeNumber,
+                        "data": data
+                    })
+                    localStorage.setItem("final-data", JSON.stringify(preFinalData))
+                })
+                .catch(err => {
+                    throw new Error(err)
+                })
         }
 
 

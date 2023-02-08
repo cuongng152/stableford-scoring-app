@@ -2,7 +2,7 @@ import axios from "axios";
 
 const DEFAULT_HEADERS = {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
 }
 
 export const courseScoreApiClient = axios.create({

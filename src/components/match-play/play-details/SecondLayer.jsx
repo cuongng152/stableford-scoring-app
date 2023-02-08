@@ -5,7 +5,6 @@ export default function SecondLayer(props) {
     const finalData = JSON.parse(localStorage.getItem('final-data')) || []
     const [averageTeeOff, setAverageTeeOff] = useState(0)
     const [stroke, setStroke] = useState(0)
-    const [score, setScore] = useState(0)
     const [stablefordScore, setStablefordScore] = useState(0)
     useEffect(() => {
         /** calculate average tee off length*/
@@ -14,7 +13,6 @@ export default function SecondLayer(props) {
 
         /** calculate stroke*/
         setStroke(calculateStroke(finalData))
-        setScore(calculateScore(finalData))
         setStablefordScore(calculateStablefordScore(finalData))
     }, [finalData])
 
@@ -22,8 +20,8 @@ export default function SecondLayer(props) {
         <div style={{display: "flex", borderColor: "red", borderRadius: "5px", height: "100%", width: "100%"}}>
             <Typography style={{alignSelf: "center", width: "100%"}}>
                 <b>Charlie Nguyen</b> [21] -
-                Stroke: {stroke}<b> [{score}]</b><br/>
-                Avg Tee Off: <b>{Math.round(averageTeeOff, 0)} - </b>
+                Stroke: {stroke}<br/>
+                Avg Tee Off: <b>{Math.round(averageTeeOff, 0) || 0} - </b>
                 Stableford Score: <b>{stablefordScore}</b>
             </Typography>
         </div>
@@ -37,9 +35,10 @@ function calculateAvgTeeOff(finalData) {
     if (finalData.length > 0) {
         finalData.map((stat) => {
             const {data} = stat || {}
+            const {holeAnalysis} = data || {}
             if (Number(data.par) > 3) {
                 i+=1
-                sumTeeOffLength+=data.teeOffLength
+                sumTeeOffLength+=holeAnalysis.teeOffLength
             }
             return sumTeeOffLength
         })
@@ -77,7 +76,7 @@ function calculateStablefordScore(finalData) {
     if (finalData.length > 0) {
         finalData.map(stat => {
             const {data} = stat || {}
-            score += Number(data.stablefordScore)
+            score += Number(data.score)
             return score
         })
     }
