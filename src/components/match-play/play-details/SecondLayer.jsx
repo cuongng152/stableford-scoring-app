@@ -1,5 +1,6 @@
 import Typography from "@mui/material/Typography";
 import {useEffect, useState} from "react";
+import {calculateAvgTeeOff, calculateStablefordScore, calculateStroke} from "../../../utils/global-utils";
 
 export default function SecondLayer(props) {
     const finalData = JSON.parse(localStorage.getItem('final-data')) || []
@@ -28,57 +29,57 @@ export default function SecondLayer(props) {
     )
 }
 
-function calculateAvgTeeOff(finalData) {
-    let avgTeeOff = 0
-    let sumTeeOffLength = 0
-    let i = 0
-    if (finalData.length > 0) {
-        finalData.map((stat) => {
-            const {data} = stat || {}
-            const {holeAnalysis} = data || {}
-            if (Number(data.par) > 3) {
-                i+=1
-                sumTeeOffLength+=holeAnalysis.teeOffLength
-            }
-            return sumTeeOffLength
-        })
-    }
-    avgTeeOff = sumTeeOffLength/i
-    return avgTeeOff
-}
+// function calculateAvgTeeOff(finalData) {
+//     let avgTeeOff = 0
+//     let sumTeeOffLength = 0
+//     let i = 0
+//     if (finalData.length > 0) {
+//         finalData.map((stat) => {
+//             const {data} = stat || {}
+//             const {holeAnalysis} = data || {}
+//             if (Number(data.par) > 3) {
+//                 i+=1
+//                 sumTeeOffLength+=holeAnalysis.teeOffLength
+//             }
+//             return sumTeeOffLength
+//         })
+//     }
+//     avgTeeOff = sumTeeOffLength/i
+//     return avgTeeOff
+// }
 
-function calculateStroke(finalData) {
-    let stroke = 0
-    if (finalData.length > 0) {
-        finalData.map(stat => {
-            const {data} = stat || {}
-            stroke += Number(data.stroke)
-            return stroke
-        })
-    }
-    return stroke
-}
+// function calculateStroke(finalData) {
+//     let stroke = 0
+//     if (finalData.length > 0) {
+//         finalData.map(stat => {
+//             const {data} = stat || {}
+//             stroke += Number(data.stroke)
+//             return stroke
+//         })
+//     }
+//     return stroke
+// }
 
-function calculateScore(finalData) {
-    let score = 0
-    if (finalData.length > 0) {
-        finalData.map(stat => {
-            const {data} = stat || {}
-            score += Number(data.score)
-            return score
-        })
-    }
-    return score
-}
+// function calculateScore(finalData) {
+//     let score = 0
+//     if (finalData.length > 0) {
+//         finalData.map(stat => {
+//             const {data} = stat || {}
+//             score += Number(data.score)
+//             return score
+//         })
+//     }
+//     return score
+// }
 
-function calculateStablefordScore(finalData) {
-    let score = 0
-    if (finalData.length > 0) {
-        finalData.map(stat => {
-            const {data} = stat || {}
-            score += Number(data.score)
-            return score
-        })
-    }
-    return score
-}
+// function calculateStablefordScore(finalData) {
+//     let score = 0
+//     if (finalData.length > 0) {
+//         finalData.map(stat => {
+//             const {data} = stat || {}
+//             score += Number(data.score)
+//             return score
+//         })
+//     }
+//     return score
+// }

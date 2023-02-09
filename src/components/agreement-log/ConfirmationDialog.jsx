@@ -31,9 +31,6 @@ export default function ConfirmationDialog() {
                 aria-describedby="alert-dialog-description"
                 style={{width: "50%", justifyContent: "center"}}
             >
-                {/*<DialogTitle id="alert-dialog-title">*/}
-                {/*    {"Are you ready?"}*/}
-                {/*</DialogTitle>*/}
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                        Let's tee off. Shall we?

@@ -133,9 +133,6 @@ export default function Play() {
             "holePar": 5
         }
     ]
-    // useEffect(() => {
-    //     const test = prepareStableford(matchData, 21)
-    // }, [matchData])
     return (
         <Layout>
             <div className={styles.contentWrapper}>
@@ -180,6 +177,7 @@ export default function Play() {
                                               setTeeOffLength={setTeeOfFLength} inPlayMatchData={inPlayMatchData}
                                               holeNumber={holeNumber} setHoleNumber={setHoleNumber}
                                               stablefordObj={stableford[holeNumber - 1]}
+                                              // savedHoleData={savedHoleData}
                                 />
                             </Item>
                         </Grid>

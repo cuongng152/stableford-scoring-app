@@ -46,16 +46,13 @@ export default function FirstLayer(props) {
                     }}
                 >
                     <Paper elevation={0}>Par<br/>
-                        <b>{inPlayMatchData.holePar}</b>
+                        <b>{inPlayMatchData.holePar || ''}</b>
                     </Paper>
                     <Paper elevation={0}>Length<br/>
-                        <b>{inPlayMatchData.holeLength} (yards)</b>
+                        <b>{inPlayMatchData.holeLength || ''} (yards)</b>
                     </Paper>
                     <Paper elevation={0}>Index<br/>
-                        <b>{inPlayMatchData.holeIndex}</b>
-                    </Paper>
-                    <Paper elevation={0}>Stableford Score<br/>
-                        <b>{3}</b>
+                        <b>{inPlayMatchData.holeIndex || ''}</b>
                     </Paper>
                 </Box>
             </div>

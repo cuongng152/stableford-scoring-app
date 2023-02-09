@@ -38,3 +38,24 @@ export const saveStablefordScoreByHole = async (payload) => {
         throw new Error(err)
     }
 }
+
+export const saveCourseScore = async (payload) => {
+    try {
+        const {status} = await courseScoreApiClient.post('', payload)
+        if (status === 201) {
+            return true
+        }
+        return false
+    } catch (err) {
+        throw new Error(err)
+    }
+}
+
+export const getCourseScoreByHoleCode = async (holeCode) => {
+    try {
+        const { data } = await courseScoreApiClient.get(`/holecode/${holeCode}`).then((response) => response)
+        return data
+    } catch (err) {
+        throw new Error(err)
+    }
+}

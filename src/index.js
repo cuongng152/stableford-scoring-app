@@ -14,7 +14,6 @@ root.render(
       <CustomRouter history={myHistory}>
           <Provider store={store}>
               <App />
-
           </Provider>
       </CustomRouter>
   </React.StrictMode>
