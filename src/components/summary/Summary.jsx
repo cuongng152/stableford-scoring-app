@@ -54,12 +54,16 @@ export default function Summary() {
     const [isSubmitted, setIsSubmitted] = React.useState(false);
     const navigate = useNavigate()
     useEffect(() => {
+        let dailyHandicap = 0;
         if (localStorage.getItem('data')) {
             setRowsData(JSON.parse(localStorage.getItem('data')))
         }
         let inFlightData = []
         let detailsRef = {}
-        getStablefordScoreByHoleCode("02082022Morning").then((response) => {
+        if (localStorage.getItem('hole-code')) {
+            dailyHandicap = localStorage.getItem('hole-code')
+        }
+        getStablefordScoreByHoleCode(dailyHandicap).then((response) => {
             response && response.map(data => {
                 const {holeIndex, length, par, score, stroke, holeAnalysis} = data || {}
                 const {putt, teeOffDirection, teeOffLength} = holeAnalysis || {}

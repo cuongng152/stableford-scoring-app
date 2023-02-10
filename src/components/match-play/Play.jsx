@@ -16,21 +16,6 @@ const Item = styled(Paper)(({theme}) => ({
     color: theme.palette.text.secondary,
 }));
 
-const prepareStableford = (matchData, dailyHandicap) => {
-    const test = matchData.map((data) => {
-        let diff = dailyHandicap - 18
-        if (diff > 0) {
-            if (Number(data.holeIndex) <= diff) {
-                data.holePar = Number(data.holePar) + 2
-            } else if (Number(data.holeIndex) > diff) {
-                data.holePar = Number(data.holePar) + 1
-            }
-        }
-        return data
-    })
-    return test
-}
-
 export default function Play() {
     const matchData = localStorage.getItem('matchData') && JSON.parse(localStorage.getItem('matchData'))
     const inMemoryHoleNumber = JSON.parse(localStorage.getItem('hole-number')) || 1
@@ -172,7 +157,6 @@ export default function Play() {
                                               setTeeOffLength={setTeeOfFLength} inPlayMatchData={inPlayMatchData}
                                               holeNumber={holeNumber} setHoleNumber={setHoleNumber}
                                               stablefordObj={stableford[holeNumber - 1]}
-                                              // savedHoleData={savedHoleData}
                                 />
                             </Item>
                         </Grid>

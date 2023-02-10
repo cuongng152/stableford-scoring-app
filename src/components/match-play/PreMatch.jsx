@@ -17,6 +17,7 @@ export default function PreMatch() {
             label: i
         })
     }
+
     const holeParArray = [
         {
             value: '3',
@@ -31,6 +32,16 @@ export default function PreMatch() {
             label: '5',
         },
     ];
+    const timePlayArray = [
+        {
+            value: 'Morning',
+            label: 'Morning',
+        },
+        {
+            value: 'Afternoon',
+            label: 'Afternoon',
+        }
+    ]
     const [holeIndex, setHoleIndex] = useState('1')
     const [holeLength, setHoleLength] = useState('')
     const [holePar, setHolePar] = useState('3')
@@ -38,6 +49,7 @@ export default function PreMatch() {
     const getMatchData = () => store.getState()?.appReducer?.matchData
     const [matchDataInFlight, setMatchDataInFlight] = useState([])
     const backupMatchData = (localStorage.getItem('matchData') && JSON.parse(localStorage.getItem('matchData'))) || []
+    const [dailyHandicap, setDailyHandicap] = useState(36)
 
     const onChangeHoleData = (event) => {
         const {id, innerText, value} = event.target || {}
@@ -53,11 +65,53 @@ export default function PreMatch() {
             setHoleLength(value)
         }
 
+        if (id === 'outlined-select-time-play') {
+            const date = (new Date()).toLocaleDateString()
+            const holeCode = (date+innerText).replaceAll("/", '')
+            localStorage.setItem('hole-code', holeCode)
+        }
+
+        if (id === 'outlined-select-daily-handicap') {
+            setDailyHandicap(value)
+            localStorage.setItem('daily-handicap', value)
+        }
+
         if (holeIndex !== '' && holeLength !== 0 && holePar !== '') {
             setDataValidated(true)
         }
     }
+    const calculateStablefordList = (matchData, dailyHandicap) => {
+        let stablefordList = []
+        if (dailyHandicap > 18) {
+            const diff = dailyHandicap - 18
+            matchData.map(obj => {
+                let inFlightStableford = 0
+                if (Number(obj.holeIndex) <= diff) {
+                    inFlightStableford = Number(obj.holePar) + 2
+                    stablefordList.push({'holePar': inFlightStableford})
+                } else {
+                    inFlightStableford = Number(obj.holePar) + 1
+                    stablefordList.push({'holePar': inFlightStableford})
+                }
+                return stablefordList
+            })
+        }
 
+        if (dailyHandicap < 18) {
+            matchData.map(obj => {
+                let inFlightStableford = 0
+                if (Number(obj.holeIndex) <= dailyHandicap) {
+                    inFlightStableford = Number(obj.holePar) + 1
+                    stablefordList.push(inFlightStableford)
+                } else {
+                    inFlightStableford = Number(obj.holePar)
+                    stablefordList.push(inFlightStableford)
+                }
+                return stablefordList
+            })
+        }
+        localStorage.setItem('stableford-list', JSON.stringify(stablefordList))
+    }
     const onClickHoleData = () => {
         let copyOfData = matchDataInFlight
         let inFlightData = {
@@ -71,6 +125,7 @@ export default function PreMatch() {
         if (matchDataInFlight.length === 18) {
             store.dispatch(setMatchData(matchDataInFlight))
             localStorage.setItem("matchData", JSON.stringify(matchDataInFlight))
+            calculateStablefordList(matchDataInFlight, dailyHandicap)
             setMatchDataInFlight([])
         }
     }
@@ -94,6 +149,35 @@ export default function PreMatch() {
                     </div>
                     :
                     <>
+                        <div style={{width: "80%", display: "inline-grid", paddingTop: "10px", paddingBottom: "10px"}}>
+                            <TextField
+                                id="outlined-select-daily-handicap"
+                                label="Handicap"
+                                variant="outlined"
+                                onChange={onChangeHoleData}
+                                itemID={`daily-handicap`}
+                                value={dailyHandicap}
+                            />
+                        </div>
+                        <div style={{width: "80%", display: "inline-grid", marginBottom: "10px"}}>
+                            <TextField
+                                id="outlined-select-time-play"
+                                select
+                                label="Time"
+                                helperText="Please select playing time"
+                            >
+                                {timePlayArray.map((option) => (
+                                    <MenuItem
+                                        id="outlined-select-time-play"
+                                        onClick={onChangeHoleData}
+                                        key={option.value}
+                                        value={option.value}
+                                    >
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        </div>
                         <h3>Hole {matchDataInFlight === [] ? backupMatchData.length + 1 : matchDataInFlight.length + 1}</h3>
                         <div style={{width: "80%", display: "inline-grid", marginBottom: "10px"}}>
                             <TextField
