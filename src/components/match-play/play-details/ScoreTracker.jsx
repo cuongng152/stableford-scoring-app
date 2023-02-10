@@ -109,10 +109,11 @@ export default function ScoreTracker(props) {
     const saveHole = () => {
         const storageData = localStorage.getItem('hole-data') && JSON.parse(localStorage.getItem('hole-data'))
         const inMemoryFinalData = localStorage.getItem('final-data') && JSON.parse(localStorage.getItem('final-data'))
+        const savedHoleCode = localStorage.getItem('hole-code') && JSON.parse(localStorage.getItem('hole-code'))
         let preFinalData = inMemoryFinalData || []
         const stablefordScore = calculateStablefordScore(stablefordObj, stroke)
         const data = new StablefordScore({
-            holeCode: '02082022Morning',
+            holeCode: savedHoleCode,
             length: inPlayMatchData?.holeLength || 0,
             par: inPlayMatchData?.holePar || 0,
             holeIndex: inPlayMatchData?.holeIndex || 0,

@@ -7,6 +7,7 @@ export default function SecondLayer(props) {
     const [averageTeeOff, setAverageTeeOff] = useState(0)
     const [stroke, setStroke] = useState(0)
     const [stablefordScore, setStablefordScore] = useState(0)
+    const dailyHandicap = localStorage.getItem('daily-handicap')
     useEffect(() => {
         /** calculate average tee off length*/
         const avgLength = calculateAvgTeeOff(finalData)
@@ -20,7 +21,7 @@ export default function SecondLayer(props) {
     return (
         <div style={{display: "flex", borderColor: "red", borderRadius: "5px", height: "100%", width: "100%"}}>
             <Typography style={{alignSelf: "center", width: "100%"}}>
-                <b>Charlie Nguyen</b> [21] -
+                <b>Charlie Nguyen</b> [{dailyHandicap}] -
                 Stroke: {stroke}<br/>
                 Avg Tee Off: <b>{Math.round(averageTeeOff, 0) || 0} - </b>
                 Stableford Score: <b>{stablefordScore}</b>

@@ -37,12 +37,12 @@ function createData(
 function calculateSummaryInfo(data) {
     const newScore = new CourseScore({
         stroke: calculateStroke(data),
-        courseName: 'test name',
+        courseName: localStorage.getItem('course-name') || '',
         dateOfPlay: (new Date()),
         dailyHandicap: 21,
         avgDriverDistance: calculateAvgTeeOff(data),
         stablefordScore: calculateStablefordScore(data),
-        holeCode: '02082022Morning'
+        holeCode: localStorage.getItem('hole-code') || ''
     })
     return newScore
 }
@@ -54,16 +54,16 @@ export default function Summary() {
     const [isSubmitted, setIsSubmitted] = React.useState(false);
     const navigate = useNavigate()
     useEffect(() => {
-        let dailyHandicap = 0;
+        let savedHoleCode = '';
         if (localStorage.getItem('data')) {
             setRowsData(JSON.parse(localStorage.getItem('data')))
         }
         let inFlightData = []
         let detailsRef = {}
         if (localStorage.getItem('hole-code')) {
-            dailyHandicap = localStorage.getItem('hole-code')
+            savedHoleCode = localStorage.getItem('hole-code')
         }
-        getStablefordScoreByHoleCode(dailyHandicap).then((response) => {
+        getStablefordScoreByHoleCode(savedHoleCode).then((response) => {
             response && response.map(data => {
                 const {holeIndex, length, par, score, stroke, holeAnalysis} = data || {}
                 const {putt, teeOffDirection, teeOffLength} = holeAnalysis || {}
@@ -75,7 +75,7 @@ export default function Summary() {
             setSummaryDetails(detailsRef)
         })
 
-        getCourseScoreByHoleCode("02082022Morning")
+        getCourseScoreByHoleCode(savedHoleCode)
             .then((response) => {
                 if (response.length > 0) {
                     setIsSubmitted(true)

@@ -50,6 +50,7 @@ export default function PreMatch() {
     const [matchDataInFlight, setMatchDataInFlight] = useState([])
     const backupMatchData = (localStorage.getItem('matchData') && JSON.parse(localStorage.getItem('matchData'))) || []
     const [dailyHandicap, setDailyHandicap] = useState(36)
+    const [courseName, setCourseName] = useState('')
 
     const onChangeHoleData = (event) => {
         const {id, innerText, value} = event.target || {}
@@ -63,6 +64,11 @@ export default function PreMatch() {
 
         if (id === 'outlined-select-hole-length') {
             setHoleLength(value)
+        }
+
+        if (id === 'outlined-select-course') {
+            setCourseName(value)
+            localStorage.setItem('course-name', value)
         }
 
         if (id === 'outlined-select-time-play') {
@@ -149,6 +155,16 @@ export default function PreMatch() {
                     </div>
                     :
                     <>
+                        <div style={{width: "80%", display: "inline-grid", paddingTop: "10px", paddingBottom: "10px"}}>
+                            <TextField
+                                id="outlined-select-course"
+                                label="Course"
+                                variant="outlined"
+                                onChange={onChangeHoleData}
+                                itemID={`course`}
+                                value={courseName}
+                            />
+                        </div>
                         <div style={{width: "80%", display: "inline-grid", paddingTop: "10px", paddingBottom: "10px"}}>
                             <TextField
                                 id="outlined-select-daily-handicap"
