@@ -40,7 +40,7 @@ export default function Play() {
     const [putt, setPutt] = useState(0)
     const [teeOffDirection, setTeeOffDirection] = useState("")
     const [teeOffLength, setTeeOfFLength] = useState(0)
-    const inPlayMatchData = matchData[holeNumber - 1]
+    const inPlayMatchData = matchData && matchData[holeNumber - 1]
     const stableford = [
         {
             "holeIndex": 9,
@@ -157,11 +157,6 @@ export default function Play() {
                                 <SecondLayer score={score} setScore={setScore}/>
                             </Item>
                         </Grid>
-                        {/*<Grid xs={3} md={4}>*/}
-                        {/*    <Item>*/}
-                        {/*        <SecondLayerRight setScore={setScore} holeNumber={holeNumber} setHoleNumber={setHoleNumber} />*/}
-                        {/*    </Item>*/}
-                        {/*</Grid>*/}
                         <Grid xs={12} md={12}>
                             <Item style={{
                                 borderColor: "red",

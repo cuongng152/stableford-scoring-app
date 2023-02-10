@@ -6,23 +6,23 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import {useNavigate} from "react-router-dom";
 
-export default function ConfirmationDialog() {
+export default function ConfirmationDialog(props) {
     const [open, setOpen] = React.useState(false);
     const navigate = useNavigate()
-
+    const {navigation, displayText, descriptionText, proceedText} = props || {}
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
         setOpen(false);
-        navigate('/play')
+        navigate(navigation)
     };
 
     return (
         <div>
             <Button variant="outlined" onClick={handleClickOpen}>
-                Are you ready?
+                {displayText}
             </Button>
             <Dialog
                 open={open}
@@ -33,13 +33,13 @@ export default function ConfirmationDialog() {
             >
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                       Let's tee off. Shall we?
+                        {descriptionText}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button onClick={handleClose} autoFocus>
-                        Tee off
+                        {proceedText}
                     </Button>
                 </DialogActions>
             </Dialog>

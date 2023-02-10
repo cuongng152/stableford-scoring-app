@@ -57,9 +57,9 @@ export default function ScoreTracker(props) {
         },
     ];
     const [teeOffLengthLeft, setTeeOffLengthLeft] = useState()
-    const holeData = JSON.parse(localStorage.getItem('hole-data')) || []
-    const finalData = JSON.parse(localStorage.getItem('final-data')) || {}
-    const finalDataArray = Array.from(finalData)[holeNumber-1] || {}
+    const holeData = (localStorage.getItem('hole-data') && JSON.parse(localStorage.getItem('hole-data'))) || []
+    const finalData = (localStorage.getItem('final-data') && JSON.parse(localStorage.getItem('final-data')))
+    const finalDataArray = (finalData && Array.from(finalData)[holeNumber - 1]) || {}
     const onChangeHoleData = (event) => {
         const {id, innerText, value} = event.target || {}
         if (id === 'outlined-select-tee-off-direction') {
@@ -107,15 +107,15 @@ export default function ScoreTracker(props) {
     }
 
     const saveHole = () => {
-        const storageData = JSON.parse(localStorage.getItem('hole-data'))
-        const inMemoryFinalData = JSON.parse(localStorage.getItem('final-data'))
+        const storageData = localStorage.getItem('hole-data') && JSON.parse(localStorage.getItem('hole-data'))
+        const inMemoryFinalData = localStorage.getItem('final-data') && JSON.parse(localStorage.getItem('final-data'))
         let preFinalData = inMemoryFinalData || []
         const stablefordScore = calculateStablefordScore(stablefordObj, stroke)
         const data = new StablefordScore({
             holeCode: '02082022Morning',
-            length: inPlayMatchData.holeLength,
-            par: inPlayMatchData.holePar,
-            holeIndex: inPlayMatchData.holeIndex,
+            length: inPlayMatchData?.holeLength || 0,
+            par: inPlayMatchData?.holePar || 0,
+            holeIndex: inPlayMatchData?.holeIndex || 0,
             stroke: stroke,
             score: stablefordScore,
             holeAnalysis: {
@@ -124,18 +124,22 @@ export default function ScoreTracker(props) {
                 teeOffDirection: storageData.teeOffDirection
             }
         })
-        if (holeNumber > 0 && holeNumber <= 18) {
+        if (holeNumber > 0 && holeNumber < 19) {
             /** saving stableford score by hole*/
             saveStablefordScoreByHole(data)
                 .then(response => {
                     /** clear storage and set hole number*/
-                    setHoleNumber(holeNumber + 1)
+                    if (holeNumber <= 18) {
+                        setHoleNumber(holeNumber + 1)
+                        if (holeNumber === 18) {
+                            setHoleNumber(18)
+                        }
+                    }
+
                     localStorage.setItem("hole-data", JSON.stringify([]))
                     if (holeNumber < 18) {
                         localStorage.setItem("hole-number", JSON.stringify(holeNumber + 1))
                     }
-
-
                     /** clear states */
                     setStroke(0)
                     setPutt(0)
@@ -145,6 +149,9 @@ export default function ScoreTracker(props) {
                     /** set final data*/
                     preFinalData.push(data)
                     localStorage.setItem("final-data", JSON.stringify(preFinalData))
+                    if (holeNumber === 18) {
+                        navigate('/summary')
+                    }
                 })
                 .catch(err => {
                     throw new Error(err)
@@ -278,18 +285,23 @@ export default function ScoreTracker(props) {
                 />
             </div>
             <div style={{display: "flex", justifyContent: "center", marginTop: "10px"}}>
-                <Button variant="contained" onClick={inputDetails} disabled={finalDataArray.data}>
+                <Button variant="contained" onClick={inputDetails} disabled={finalDataArray?.data}>
                     <TaskAltIcon/>
                     <Typography style={{marginLeft: "5px"}}>Save Length and Direction</Typography>
                 </Button>
-                <Button variant="contained" style={{marginLeft: "20px"}} onClick={saveHole} disabled={finalDataArray?.data}>
+                <Button variant="contained" style={{marginLeft: "20px"}} onClick={saveHole}
+                        disabled={finalDataArray?.data}>
                     <SaveAsIcon/>
                     <Typography style={{marginLeft: "5px"}}>Save</Typography>
                 </Button>
-                <Button variant="contained" style={{marginLeft: "10px"}} onClick={() => navigate('/summary')}>
-                    <BoltIcon/>
-                    {Array.from(finalData).length === 18 && <Typography style={{marginLeft: "5px"}}>Next</Typography>}
-                </Button>
+                {(finalData && Array.from(finalData).length === 18) &&
+                    <>
+                        <Button variant="contained" style={{marginLeft: "10px"}} onClick={() => navigate('/summary')}>
+                            <BoltIcon/>
+                            <Typography style={{marginLeft: "5px"}}>Next</Typography>
+                        </Button>
+                    </>
+                }
             </div>
         </>
     )

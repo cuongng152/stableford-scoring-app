@@ -51,8 +51,8 @@ export function calculateStablefordScore(finalData) {
 
 export const calculateTotalPar = (data) => {
     let totalPar = 0
-    if (data.length > 0) {
-        data.map(stat => {
+    if (data?.length > 0) {
+        data?.map(stat => {
             const {holePar} = stat || {}
             totalPar += Number(holePar)
             return totalPar

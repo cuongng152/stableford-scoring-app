@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 
 export default function FirstLayer(props) {
     const {matchData, holeNumber, setHoleNumber, setTeeOffLength} = props || {}
-    const inPlayMatchData = matchData[holeNumber - 1]
+    const inPlayMatchData = matchData && matchData[holeNumber - 1]
     return (
         <div style={{borderStyle: "double", borderColor: "red", borderRadius: "5px", width: "95%"}}>
             <Typography className={styles.firstLayer} style={{fontSize: "30px", fontWeight: 'bolder'}}>
@@ -46,13 +46,13 @@ export default function FirstLayer(props) {
                     }}
                 >
                     <Paper elevation={0}>Par<br/>
-                        <b>{inPlayMatchData.holePar || ''}</b>
+                        <b>{inPlayMatchData?.holePar || ''}</b>
                     </Paper>
                     <Paper elevation={0}>Length<br/>
-                        <b>{inPlayMatchData.holeLength || ''} (yards)</b>
+                        <b>{inPlayMatchData?.holeLength || ''} (yards)</b>
                     </Paper>
                     <Paper elevation={0}>Index<br/>
-                        <b>{inPlayMatchData.holeIndex || ''}</b>
+                        <b>{inPlayMatchData?.holeIndex || ''}</b>
                     </Paper>
                 </Box>
             </div>

@@ -19,6 +19,7 @@ import {
 } from "../../utils/global-utils";
 import Button from "@mui/material/Button";
 import {Alert} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 function createData(
     length: string,
@@ -51,7 +52,7 @@ export default function Summary() {
     const [summaryDetails, setSummaryDetails] = useState(new CourseScore({}))
     const matchData = localStorage.getItem('matchData') && JSON.parse(localStorage.getItem('matchData'))
     const [isSubmitted, setIsSubmitted] = React.useState(false);
-
+    const navigate = useNavigate()
     useEffect(() => {
         if (localStorage.getItem('data')) {
             setRowsData(JSON.parse(localStorage.getItem('data')))
@@ -84,7 +85,13 @@ export default function Summary() {
     const submitScore = () => {
         saveCourseScore(summaryDetails)
             .then(r => {
-                setIsSubmitted(true)
+                if (r) {
+                    setIsSubmitted(true)
+                    localStorage.setItem('final-data', '')
+                    localStorage.setItem('hole-number', 1)
+                    localStorage.setItem('matchData', '')
+                    navigate('/')
+                }
             })
             .catch(err => {
                 throw new Error(err)

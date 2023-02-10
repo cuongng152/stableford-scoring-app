@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {calculateAvgTeeOff, calculateStablefordScore, calculateStroke} from "../../../utils/global-utils";
 
 export default function SecondLayer(props) {
-    const finalData = JSON.parse(localStorage.getItem('final-data')) || []
+    const finalData = (localStorage.getItem('final-data') && JSON.parse(localStorage.getItem('final-data'))) || []
     const [averageTeeOff, setAverageTeeOff] = useState(0)
     const [stroke, setStroke] = useState(0)
     const [stablefordScore, setStablefordScore] = useState(0)

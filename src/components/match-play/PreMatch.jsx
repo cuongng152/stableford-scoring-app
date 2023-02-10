@@ -32,12 +32,12 @@ export default function PreMatch() {
         },
     ];
     const [holeIndex, setHoleIndex] = useState('1')
-    const [holeLength, setHoleLength] = useState('0')
+    const [holeLength, setHoleLength] = useState('')
     const [holePar, setHolePar] = useState('3')
     const [isDataValidated, setDataValidated] = useState(false)
     const getMatchData = () => store.getState()?.appReducer?.matchData
     const [matchDataInFlight, setMatchDataInFlight] = useState([])
-    const backupMatchData = JSON.parse(localStorage.getItem('matchData')) || []
+    const backupMatchData = (localStorage.getItem('matchData') && JSON.parse(localStorage.getItem('matchData'))) || []
 
     const onChangeHoleData = (event) => {
         const {id, innerText, value} = event.target || {}
@@ -88,7 +88,10 @@ export default function PreMatch() {
                     But first, please input the few more details.
                 </p>
                 {backupMatchData.length === 18
-                    ? <div><ConfirmationDialog /></div>
+                    ? <div>
+                        <ConfirmationDialog navigation={'/play'} displayText={'Are you ready?'}
+                                               descriptionText={`Let's tee off. Shall we?`} proceedText={'Tee off'}/>
+                    </div>
                     :
                     <>
                         <h3>Hole {matchDataInFlight === [] ? backupMatchData.length + 1 : matchDataInFlight.length + 1}</h3>
