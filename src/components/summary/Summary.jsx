@@ -108,7 +108,7 @@ export default function Summary() {
                     Here are summary of the match.
                 </h4>
                 <p className={'text-semi-bold font-black-1 text-center text-lg-start'}>
-                    Average Driver Distance: {summaryDetails?.avgDriverDistance} yards<br/>
+                    Average Driver Distance: {Math.round(summaryDetails?.avgDriverDistance)} yards<br/>
                     Stableford Score: {summaryDetails?.stablefordScore}<br/>
                     Stroke: {summaryDetails?.stroke} <b>[{summaryDetails?.stroke - calculateTotalPar(matchData)}]</b>
                 </p>
@@ -149,7 +149,7 @@ export default function Summary() {
                                 <TableCell align="right">{row.holeIndex}</TableCell>
                                 <TableCell align="right">{row.par}</TableCell>
                                 <TableCell align="right">{row.stroke}</TableCell>
-                                <TableCell align="right">{row.score}</TableCell>
+                                <TableCell align="right">{row.score || 0}</TableCell>
                                 <TableCell align="right">{row.teeOffLength}</TableCell>
                                 <TableCell align="right">{row.teeOfDirection}</TableCell>
                                 <TableCell align="right">{row.putt}</TableCell>

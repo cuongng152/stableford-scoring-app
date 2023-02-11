@@ -34,7 +34,7 @@ const CourseAccordionData = (props) => {
             <div className={styles.AccordionDetailsWrapper}>
                 <div className={styles.AccordionLabelSec} data-testid="average-driver-distance">
                     <label className={styles.AccordionSubHeader}>Average Driver Distance: </label>
-                    <div className={`${styles.AccordionValue} text-capitalize`}>{avgDriverDistance}</div>
+                    <div className={`${styles.AccordionValue} text-capitalize`}>{Math.round(avgDriverDistance)} (yards)</div>
                 </div>
             </div>
             <div className={styles.AccordionDetailsWrapper}>

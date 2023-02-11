@@ -14,9 +14,11 @@ export default function ConfirmationDialog(props) {
         setOpen(true);
     };
 
-    const handleClose = () => {
+    const handleClose = (e) => {
         setOpen(false);
-        navigate(navigation)
+        if (e.target.id !== 'cancel-tee-off') {
+            navigate(navigation)
+        }
     };
 
     return (
@@ -37,7 +39,7 @@ export default function ConfirmationDialog(props) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button id={'cancel-tee-off'} onClick={handleClose}>Cancel</Button>
                     <Button onClick={handleClose} autoFocus>
                         {proceedText}
                     </Button>

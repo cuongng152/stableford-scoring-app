@@ -7,16 +7,16 @@ export {
     myHistory
 }
 
-export function calculateAvgTeeOff(finalData) {
+export function calculateAvgTeeOff(finalData, isComingFromScoreDetails) {
     let avgTeeOff = 0
     let sumTeeOffLength = 0
     let i = 0
-    if (finalData.length > 0) {
+    if (Number(finalData.length) > 0) {
         finalData.map((stat) => {
             const {par, holeAnalysis} = stat || {}
             if (Number(par) > 3) {
                 i+=1
-                sumTeeOffLength+=holeAnalysis.teeOffLength
+                isComingFromScoreDetails ? sumTeeOffLength+=stat?.teeOffLength : sumTeeOffLength+=holeAnalysis.teeOffLength
             }
             return sumTeeOffLength
         })
@@ -49,12 +49,12 @@ export function calculateStablefordScore(finalData) {
     return stablefordScore
 }
 
-export const calculateTotalPar = (data) => {
+export const calculateTotalPar = (data, isComingFromScoreDetails) => {
     let totalPar = 0
     if (data?.length > 0) {
         data?.map(stat => {
             const {holePar} = stat || {}
-            totalPar += Number(holePar)
+            isComingFromScoreDetails ? totalPar += Number(stat?.par) : totalPar += Number(holePar)
             return totalPar
         })
     }

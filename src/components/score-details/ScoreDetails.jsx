@@ -11,6 +11,12 @@ import Layout from "../../layout";
 import styles from "../../layout/layout.module.scss";
 import {getStablefordScoreByHoleCode} from "../../service/api-service";
 import store from "../../store";
+import {
+    calculateAvgTeeOff,
+    calculateStablefordScore,
+    calculateStroke,
+    calculateTotalPar
+} from "../../utils/global-utils";
 
 function createData(
     length: string,
@@ -61,12 +67,17 @@ export default function ScoreDetails() {
                 <p className={'text-semi-bold font-black-1 text-center text-lg-start'}>
                     Here are detail of the match.
                 </p>
+                <p className={'text-semi-bold font-black-1 text-center text-lg-start'}>
+                    Average Driver Distance: {Math.round(calculateAvgTeeOff(rowsData, true))} yards<br/>
+                    Stableford Score: {calculateStablefordScore(rowsData)}<br/>
+                    Stroke: {calculateStroke(rowsData)} <b>[{calculateStroke(rowsData) - calculateTotalPar(rowsData, true)}]</b>
+                </p>
             </div>
             <TableContainer component={Paper} style={{marginLeft: "10px", marginRight: "25px"}}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell style={{fontWeight: "bold"}}>Hole</TableCell>
+                            <TableCell align="right" style={{fontWeight: "bold"}}>Hole</TableCell>
                             <TableCell align="right" style={{fontWeight: "bold"}}>Length (Yards)</TableCell>
                             <TableCell align="right" style={{fontWeight: "bold"}}>Index</TableCell>
                             <TableCell align="right" style={{fontWeight: "bold"}}>Par</TableCell>
@@ -83,14 +94,14 @@ export default function ScoreDetails() {
                                 key={index}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                             >
-                                <TableCell component="th" scope="row">{index + 1}</TableCell>
-                                <TableCell style={{marginRight: "-20px"}}>
+                                <TableCell align="right" component="th" scope="row">{index + 1}</TableCell>
+                                <TableCell align="right" style={{marginRight: "-20px"}}>
                                     {row.length}
                                 </TableCell>
                                 <TableCell align="right">{row.holeIndex}</TableCell>
                                 <TableCell align="right">{row.par}</TableCell>
                                 <TableCell align="right">{row.stroke}</TableCell>
-                                <TableCell align="right">{row.score}</TableCell>
+                                <TableCell align="right">{row.score || 0}</TableCell>
                                 <TableCell align="right">{row.teeOffLength}</TableCell>
                                 <TableCell align="right">{row.teeOfDirection}</TableCell>
                                 <TableCell align="right">{row.putt}</TableCell>
