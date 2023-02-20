@@ -61,11 +61,8 @@ export default function ScoreDetails() {
     return (
         <Layout>
             <div className={styles.contentWrapper}>
-                <h4 className={`text-semi-bold font-black-1 text-center text-lg-start`}>
-                    Course of Play: Heritage
-                </h4>
                 <p className={'text-semi-bold font-black-1 text-center text-lg-start'}>
-                    Here are detail of the match.
+                    Here are the details of the match.
                 </p>
                 <p className={'text-semi-bold font-black-1 text-center text-lg-start'}>
                     Average Driver Distance: {Math.round(calculateAvgTeeOff(rowsData, true))} yards<br/>
