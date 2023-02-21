@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const DEV_HOST = 'http://localhost:8089'
-const PROD_HOST = 'http://3.26.217.107:8089'
+const DEV_HOST = 'https://localhost:8089'
+const PROD_HOST = 'https://3.26.217.107:8089'
 
 const DEFAULT_HEADERS = {
     Accept: 'application/json',
