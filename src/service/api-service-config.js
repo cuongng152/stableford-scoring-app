@@ -1,11 +1,13 @@
 import axios from "axios";
 
-const DEV_HOST = 'https://localhost:8089'
+const DEV_HOST = 'https://127.0.0.1:8089'
 const PROD_HOST = 'https://3.26.217.107:8089'
 
 const DEFAULT_HEADERS = {
     Accept: 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
 }
 
 export const courseScoreApiClient = axios.create({
