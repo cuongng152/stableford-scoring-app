@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import store from "../../store";
 import {setMatchData} from "../../store/redux";
 import ConfirmationDialog from "../agreement-log/ConfirmationDialog";
+import {generatePassword} from "../../utils/global-utils";
 
 export default function PreMatch() {
     let holeIndexArray = []
@@ -72,8 +73,7 @@ export default function PreMatch() {
         }
 
         if (id === 'outlined-select-time-play') {
-            const date = (new Date()).toLocaleDateString()
-            const holeCode = (date+innerText).replaceAll("/", '')
+            const holeCode = generatePassword(6) + innerText;
             localStorage.setItem('hole-code', holeCode)
         }
 

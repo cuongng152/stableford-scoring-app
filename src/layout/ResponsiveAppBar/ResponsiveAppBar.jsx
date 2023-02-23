@@ -43,6 +43,7 @@ function ResponsiveAppBar() {
             localStorage.setItem('hole-number', 1)
             localStorage.setItem('hole-code', '')
             localStorage.setItem("matchData", JSON.stringify([]))
+            localStorage.setItem('final-data', JSON.stringify([]))
             navigate('/')
         }
         setAnchorElNav(null);

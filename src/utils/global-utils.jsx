@@ -68,3 +68,14 @@ export const loggingAPIError = (errorCode, errorMessage, httpErrorCode) => {
     console.log('Http error code: ', httpErrorCode)
 }
 
+export const generatePassword = (length) => {
+    const alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*_-+=";
+    let password = "";
+    for (let i = 0; i < length; i++) {
+        password += alpha.charAt(
+            Math.floor(Math.random() * alpha.length)
+        );
+    }
+    return password;
+};
+
