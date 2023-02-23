@@ -11,31 +11,40 @@ import {Variants} from "../index";
 
 export default function SimpleAccordion() {
     const [courseScores, setCourseScores] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         retrieveCourseScores().then((response) => {
-            setCourseScores(response)
+            if (response?.length === 0) {
+                setIsLoading(false)
+            } else {
+                setCourseScores(response)
+            }
         })
     }, [])
     return (
-        courseScores.length === 0 ? <div><Variants/></div> :
-            <div>
-                {courseScores && courseScores.map((courseScore, index) => {
-                    return (
-                        <Accordion style={{marginBottom: "10px", marginRight: "25px"}}>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon/>}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                            >
-                                <Typography style={{fontWeight: "bold"}}>{courseScore?.courseName}</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <CourseAccordionData courseScore={courseScore} index={index}/>
-                            </AccordionDetails>
-                        </Accordion>
-                    )
-                })}
-            </div>
+        isLoading ? <div><Variants/></div>
+            : courseScores.length === 0
+                ? <div>
+                    No Records.
+                </div>
+                : <div>
+                    {courseScores && courseScores.map((courseScore, index) => {
+                        return (
+                            <Accordion style={{marginBottom: "10px", marginRight: "25px"}}>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon/>}
+                                    aria-controls="panel1a-content"
+                                    id="panel1a-header"
+                                >
+                                    <Typography style={{fontWeight: "bold"}}>{courseScore?.courseName}</Typography>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <CourseAccordionData courseScore={courseScore} index={index}/>
+                                </AccordionDetails>
+                            </Accordion>
+                        )
+                    })}
+                </div>
     );
 }
