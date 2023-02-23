@@ -63,6 +63,7 @@ export default function ScoreTracker(props) {
     const onChangeHoleData = (event) => {
         const {id, innerText, value} = event.target || {}
         if (id === 'outlined-select-tee-off-direction') {
+            innerText.replaceAll('\n', '')
             setTeeOffDirection(innerText)
         }
 
