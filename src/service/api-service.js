@@ -1,10 +1,13 @@
 import {courseScoreApiClient, stablefordScoreApiClient} from "./api-service-config";
+import {loggingAPIError} from "../utils/global-utils";
 
 export const retrieveCourseScores = async () => {
     try {
         const { data } = await courseScoreApiClient.get().then((response) => response)
         return data
     } catch (err) {
+        const {code, message, response} = err || {}
+        loggingAPIError(code, message, response?.status)
         throw new Error()
     }
 }
@@ -14,6 +17,8 @@ export const retrieveStablefordScore = async () => {
         const { data } = await stablefordScoreApiClient.get().then((response) => response)
         return data
     } catch (err) {
+        const {code, message, response} = err || {}
+        loggingAPIError(code, message, response?.status)
         throw new Error()
     }
 }
@@ -23,6 +28,8 @@ export const getStablefordScoreByHoleCode = async (holeCode) => {
         const { data } = await stablefordScoreApiClient.get(`/hole/${holeCode}`).then((response) => response)
         return data
     } catch (err) {
+        const {code, message, response} = err || {}
+        loggingAPIError(code, message, response?.status)
         throw new Error(err)
     }
 }
@@ -35,6 +42,8 @@ export const saveStablefordScoreByHole = async (payload) => {
         }
         return false
     } catch (err) {
+        const {code, message, response} = err || {}
+        loggingAPIError(code, message, response?.status)
         throw new Error(err)
     }
 }
@@ -47,6 +56,8 @@ export const saveCourseScore = async (payload) => {
         }
         return false
     } catch (err) {
+        const {code, message, response} = err || {}
+        loggingAPIError(code, message, response?.status)
         throw new Error(err)
     }
 }
@@ -56,6 +67,8 @@ export const getCourseScoreByHoleCode = async (holeCode) => {
         const { data } = await courseScoreApiClient.get(`/holecode/${holeCode}`).then((response) => response)
         return data
     } catch (err) {
+        const {code, message, response} = err || {}
+        loggingAPIError(code, message, response?.status)
         throw new Error(err)
     }
 }

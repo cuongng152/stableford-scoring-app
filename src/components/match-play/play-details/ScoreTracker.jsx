@@ -155,7 +155,7 @@ export default function ScoreTracker(props) {
                     }
                 })
                 .catch(err => {
-                    throw new Error(err)
+                    throw new Error("ERROR", err)
                 })
         }
 

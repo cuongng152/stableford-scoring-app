@@ -61,3 +61,10 @@ export const calculateTotalPar = (data, isComingFromScoreDetails) => {
     return totalPar
 }
 
+export const loggingAPIError = (errorCode, errorMessage, httpErrorCode) => {
+    console.log('ERROR - Please fix it ASAP. Details below: ')
+    console.log('Code: ', errorCode)
+    console.log('Error Message: ', errorMessage)
+    console.log('Http error code: ', httpErrorCode)
+}
+

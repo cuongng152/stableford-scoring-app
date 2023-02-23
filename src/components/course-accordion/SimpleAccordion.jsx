@@ -15,11 +15,10 @@ export default function SimpleAccordion() {
 
     useEffect(() => {
         retrieveCourseScores().then((response) => {
-            if (response?.length === 0) {
+            if (response) {
                 setIsLoading(false)
-            } else {
-                setCourseScores(response)
             }
+            setCourseScores(response)
         })
     }, [])
     return (
