@@ -6,8 +6,9 @@ const PROD_HOST = 'https://3.26.217.107:8089'
 const DEFAULT_HEADERS = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+    'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS'
 }
 
 export const courseScoreApiClient = axios.create({

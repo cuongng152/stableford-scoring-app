@@ -31,7 +31,7 @@ export default function ConfirmationDialog(props) {
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
-                style={{width: "50%", justifyContent: "center"}}
+                style={{width: "70%", justifyContent: "center"}}
             >
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
