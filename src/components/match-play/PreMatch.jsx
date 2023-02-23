@@ -73,7 +73,8 @@ export default function PreMatch() {
         }
 
         if (id === 'outlined-select-time-play') {
-            const holeCode = generatePassword(6) + innerText;
+            let holeCode = generatePassword(6) + innerText;
+            holeCode.replaceAll('\n', '')
             localStorage.setItem('hole-code', holeCode)
         }
 

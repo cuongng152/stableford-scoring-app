@@ -113,7 +113,7 @@ export default function ScoreTracker(props) {
         let preFinalData = inMemoryFinalData || []
         const stablefordScore = calculateStablefordScore(stablefordObj, stroke)
         const data = new StablefordScore({
-            holeCode: savedHoleCode,
+            holeCode: savedHoleCode.replaceAll('\n', ''),
             length: inPlayMatchData?.holeLength || 0,
             par: inPlayMatchData?.holePar || 0,
             holeIndex: inPlayMatchData?.holeIndex || 0,

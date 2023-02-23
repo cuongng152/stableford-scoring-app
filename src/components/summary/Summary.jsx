@@ -61,7 +61,7 @@ export default function Summary() {
         let inFlightData = []
         let detailsRef = {}
         if (localStorage.getItem('hole-code')) {
-            savedHoleCode = localStorage.getItem('hole-code')
+            savedHoleCode = localStorage.getItem('hole-code').replaceAll('\n', '')
         }
         getStablefordScoreByHoleCode(savedHoleCode).then((response) => {
             response && response.map(data => {
