@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,12 +12,17 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import {useNavigate} from "react-router-dom";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
+import Dialog from "@mui/material/Dialog";
 
-const pages = ['Course Scores', 'Play'];
+const pages = ['Course Scores', 'Play', 'Reset Pre Match'];
 
 function ResponsiveAppBar() {
     const navigate = useNavigate()
     const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const [open, setOpen] = useState(false)
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -27,12 +33,47 @@ function ResponsiveAppBar() {
             navigate('/')
         } else if (e.target.innerHTML === 'Play') {
             navigate('/preplay')
+        } else if (e.target.innerHTML === 'Reset Pre Match') {
+            setOpen(true)
+            /** clear local storage*/
+            localStorage.setItem("hole-data", JSON.stringify([]))
+            localStorage.setItem('daily-handicap', 0)
+            localStorage.setItem('course-name', '')
+            localStorage.setItem('stableford-list', JSON.stringify([]))
+            localStorage.setItem('hole-number', 1)
+            localStorage.setItem('hole-code', '')
+            localStorage.setItem("matchData", JSON.stringify([]))
+            navigate('/')
         }
         setAnchorElNav(null);
     };
 
     return (
-        <AppBar position="static">
+        <>
+            <Dialog
+                open={open}
+                // onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                style={{width: "70%", justifyContent: "center"}}
+            >
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Do you want to reset the pre-match information?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button id={'cancel-tee-off'}
+                            onClick={() => setOpen(false)}
+                    >No</Button>
+                    <Button
+                        onClick={() => setOpen(false)}
+                        autoFocus>
+                        Yes
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -123,6 +164,7 @@ function ResponsiveAppBar() {
                 </Toolbar>
             </Container>
         </AppBar>
+        </>
     );
 }
 export default ResponsiveAppBar;
