@@ -5,7 +5,7 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
-import {TextField} from "@mui/material";
+import {Alert, Snackbar, TextField} from "@mui/material";
 import {useState} from "react";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import SaveAsIcon from '@mui/icons-material/SaveAs';
@@ -60,6 +60,8 @@ export default function ScoreTracker(props) {
     const holeData = (localStorage.getItem('hole-data') && JSON.parse(localStorage.getItem('hole-data'))) || []
     const finalData = (localStorage.getItem('final-data') && JSON.parse(localStorage.getItem('final-data')))
     const finalDataArray = (finalData && Array.from(finalData)[holeNumber - 1]) || {}
+    const [successfulPopup, setSuccessfulPopup] = useState(false)
+    const [failurePopup, setFailurePopup] = useState(false)
     const onChangeHoleData = (event) => {
         const {id, innerText, value} = event.target || {}
         if (id === 'outlined-select-tee-off-direction') {
@@ -154,17 +156,36 @@ export default function ScoreTracker(props) {
                     if (holeNumber === 18) {
                         navigate('/summary')
                     }
+
+                    // display popup
+                    setSuccessfulPopup(true)
+                    setTimeout(() => {
+                        setSuccessfulPopup(false)
+                    }, 5000)
                 })
                 .catch(err => {
+                    // display popup
+                    setFailurePopup(true)
+                    setTimeout(() => {
+                        setFailurePopup(false)
+                    }, 5000)
                     throw new Error("ERROR", err)
                 })
         }
-
-
     }
 
     return (
         <>
+            <Snackbar open={successfulPopup}>
+                <Alert severity="success" sx={{ width: '100%' }}>
+                    Stableford score is saved successfully.
+                </Alert>
+            </Snackbar>
+            <Snackbar open={failurePopup}>
+                <Alert severity="error" sx={{ width: '100%' }}>
+                    Saving failed.
+                </Alert>
+            </Snackbar>
             <div>
                 <Typography style={{fontWeight: "bolder"}}>
                     Score tracker
