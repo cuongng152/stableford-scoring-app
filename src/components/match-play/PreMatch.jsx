@@ -50,7 +50,7 @@ export default function PreMatch() {
     const getMatchData = () => store.getState()?.appReducer?.matchData
     const [matchDataInFlight, setMatchDataInFlight] = useState([])
     const backupMatchData = (localStorage.getItem('matchData') && JSON.parse(localStorage.getItem('matchData'))) || []
-    const [dailyHandicap, setDailyHandicap] = useState(36)
+    const [dailyHandicap, setDailyHandicap] = useState('')
     const [courseName, setCourseName] = useState('')
 
     const onChangeHoleData = (event) => {
@@ -174,6 +174,7 @@ export default function PreMatch() {
                                 onChange={onChangeHoleData}
                                 itemID={`daily-handicap`}
                                 value={dailyHandicap}
+                                type="number"
                             />
                         </div>
                         <div style={{width: "80%", display: "inline-grid", marginBottom: "10px"}}>
@@ -242,6 +243,7 @@ export default function PreMatch() {
                                 onChange={onChangeHoleData}
                                 itemID={`hole-length`}
                                 value={holeLength}
+                                type="number"
                             />
                         </div>
                         <Button variant="contained"
